@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseNotFound, Http404
 
 
 def index(request):
@@ -13,16 +13,17 @@ def index(request):
 
 
 def departments(request, department_id):
-    # result = {"info": ''}
-    # if department_id == 'slug_1':
-    #     result["info"] = 'department 1'
-    #
-    # elif department_id == 'slug_2':
-    #     result["info"] = "department 2"
-    #
-    # else:
-    #     result["info"] = "no department found"
+    result = {"info": ''}
+    if department_id == 'slug_1':
+        result["info"] = 'department 1'
 
-    return redirect("index view")
+    elif department_id == 'slug_2':
+        result["info"] = "department 2"
 
-    # return HttpResponse("yess")
+    else:
+        result["info"] = "no department found"
+
+    if department_id == 'slug_1' or department_id == "slug_2":
+        return HttpResponse(f"contains information {result['info']}")
+
+    raise Http404
